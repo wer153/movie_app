@@ -3,21 +3,27 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
-const Movie = ({id, year, title, summary, poster, largePoster, genres, background}) => {
+const Movie = ({id, year, title, summary, poster, largePoster, genres, background, rating}) => {
     const summaryLength = 100
     return  (
         <LinkToDetail to= {{  pathname:`/movie/${id}`,
-                    state:{year,title,summary,largePoster,genres,background}
+                    state:{year,title,summary,largePoster,genres,background, rating}
                 }}
         >
             <MovieContainer>
                 <ImageContainer src={poster} alt='{title}' title={title}/>
-                <Title>{title}</Title>
-                <Paragraph>year:{year}</Paragraph>
+                
+                <Title>{title}  </Title>
+                <Paragraph>Rating:{rating}</Paragraph>
+                <Paragraph>Year:{year}</Paragraph>
                 <Genres>
                 {genres.map((genre, index)=><Genre key={index}>{genre}</Genre>)}
                 </Genres>
-                <Paragraph>{summary.slice(0,summaryLength)+"..."}</Paragraph>
+                <Paragraph>
+                    {summary.length<=summaryLength
+                    ?summary
+                    :summary.slice(0,summaryLength)+"..."}
+                </Paragraph>
             </MovieContainer>
         </LinkToDetail>
         )
@@ -39,12 +45,15 @@ const Paragraph = styled.p`
 `
 
 const MovieContainer = styled.div`
-    background-color: white;
+    /* background-color: white; */
+    background-color: #404040;
     margin-bottom: 70px;
     font-weight: 300;
     padding: 20px;
     border-radius: 5px;
-    color: #adaeb9;
+    /* color: #adaeb9; */
+    /* color: #b3b3b3; */
+    color: #ffffff;
     box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
     0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
 `
@@ -63,7 +72,8 @@ const Title = styled.h4`
     font-weight: 300;
     margin-bottom: 5px;
     font-size: 24px;
-    color: #2c2c2c;
+    color: #ffffff;
+    font-weight:bold;
 `
 
 const Genres = styled.ul`

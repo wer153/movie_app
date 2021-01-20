@@ -19,12 +19,15 @@ const Detail = props => {
         <MainContainer>
             <Poster src = {movieData.largePoster}/>
             <ContentContainer>
-                <h3>{movieData.title}</h3>
-                <p>year:{movieData.year}</p>
-                {/* <ul>
-                    {movieData.genres.map((genre, index)=><li key={index}>{genre}</li>)}
-                </ul> */}
-                <p>{movieData.summary}</p>
+                <Title>{movieData.title}  </Title>
+                <Genres>
+                { movieData.genres && 
+                movieData.genres.map((genre, index)=><Genre key={index}>{genre}</Genre>)}
+                </Genres>
+                <Paragraph>Rating:{movieData.rating}</Paragraph>
+                <Paragraph>Year:{movieData.year}</Paragraph>
+                <Paragraph>{' '+movieData.summary}</Paragraph>
+
             </ContentContainer>
             <ReviewContainer>
                 hello
@@ -45,13 +48,12 @@ const BackgroundContainer = styled.div`
 
 const MainContainer = styled.div`
     display: flex;
-    flex-direction:row;
     align-items: center;
     justify-content: center;
     margin-top:20vh;
     width:90vw;
     height:70vh;
-    /* background-color: gray; */
+    padding:30px;
 `
 
 
@@ -81,9 +83,11 @@ const ContentContainer = styled.div`
     /* display: flex; */
     /* flex-direction:row; */
     /* align-items: center; */
-    /* justify-content: center; */
-    /* background:white; */
+    justify-content: center;
+    background:#404040;
+    color:#FFFFFF;
     margin: 40px;
+    padding-top: 5vh;
     height:80%;
 `
 
@@ -93,9 +97,44 @@ const ReviewContainer = styled.div`
     /* flex-direction:row; */
     /* align-items: center; */
     /* justify-content: center; */
-    /* background:white; */
+    background:#404040;
+    color:#FFFFFF;
     margin-right: 40px;
     height:80%;
+`
+const Title = styled.h4`
+    display:flex;
+    justify-content: center;
+    margin: 0;
+    font-weight: 300;
+    margin-bottom: 5px;
+    font-size: 2rem;
+    color: #ffffff;
+    font-weight:bold;
+`
+
+const Genres = styled.ul`
+    list-style: none;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+`
+
+const Genre = styled.li`
+    margin-right: 10px;
+    font-size: 14px;
+    color:#B3B3B3;
+`
+
+const Paragraph = styled.p`
+    margin: 10px 40px;
+    /* padding: 10px; */
+    font-weight: 350;
+    /* margin-right: 10px; */
+    font-size: 17px;
 `
 
 export default Detail

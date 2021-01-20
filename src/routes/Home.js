@@ -2,19 +2,19 @@ import React, {useEffect, useState} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
 import Movie from '../components/Movie/Movie.js'
-import './Home.css'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [movieData, setMovieData] = useState([])
+  const [page, setPage] = useState(0)
 
-  const url = 'https://yts-proxy.now.sh/list_movies.json?sort_by=rating'
+  const url = `https://yts-proxy.now.sh/list_movies.json?sort_by=rating&page=${page}`
   const getMoviesData = async () => {
+    setPage(prev=>prev+1)
     const {data: { data:{movies}}} = await axios.get(url)
 
-    
-    await setMovieData(movies)
-    await setIsLoading(false)
+    setMovieData(movies)
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -22,14 +22,14 @@ const Home = () => {
   }, [isLoading])
   
   return (
-    <section className='container'>
+    <HomeContainer>
       {isLoading ? (
         <div className='loader'>
           <span>'Loading'</span>
         </div> //will apply spinner instead
       ) : (
         <Movies>
-          {/* {console.group(movieData)} */}
+          {console.log(movieData[0])}
           {movieData.map(movie=>{
             if(2021<=movie.year){
               return null
@@ -45,17 +45,26 @@ const Home = () => {
               largePoster={movie.large_cover_image}
               background={movie.background_image}
               genres={movie.genres}
+              rating={movie.rating}
             />)})}
         </Movies>
       )
     }
-    </section>
+    </HomeContainer>
   );
 }
 
+const HomeContainer = styled.section`
+  width:90vw;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  /* overflow:hidden; */
+`
+
 const Movies = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
   grid-gap: 100px;
   padding: 50px;
   width: 80%;
