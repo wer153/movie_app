@@ -13,10 +13,11 @@ const Detail = props => {
 
     return (
     <BackgroundContainer>
-        <HeaderPoster url = {movieData.poster}/>
+        {console.log(movieData)}
+        <BackgroundPoster url = {movieData.background}/>
 
         <MainContainer>
-            <Poster src = {movieData.poster}/>
+            <Poster src = {movieData.largePoster}/>
             <ContentContainer>
                 <h3>{movieData.title}</h3>
                 <p>year:{movieData.year}</p>
@@ -25,6 +26,9 @@ const Detail = props => {
                 </ul> */}
                 <p>{movieData.summary}</p>
             </ContentContainer>
+            <ReviewContainer>
+                hello
+            </ReviewContainer>
         </MainContainer>
     </BackgroundContainer>
     )
@@ -34,9 +38,9 @@ const BackgroundContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    width:100vw;
-    height:100vh;
-    
+    width:85vw;
+    height:85vh;
+    margin:5vh auto;
 `
 
 const MainContainer = styled.div`
@@ -44,16 +48,20 @@ const MainContainer = styled.div`
     flex-direction:row;
     align-items: center;
     justify-content: center;
-    width:80vw;
-    height:80vh;
-    background-color: gray;
+    margin-top:20vh;
+    width:90vw;
+    height:70vh;
+    /* background-color: gray; */
 `
-const HeaderPoster = styled.div`
+
+
+
+const BackgroundPoster = styled.div`
     position:absolute;
     top:0;
     background-image: url(${props=>props.url});
     width: 100vw;
-    height: 20vh;
+    height: 30vh;
     background-repeat:no-repeat;
     background-size:cover;
     z-index:-1;
@@ -74,8 +82,20 @@ const ContentContainer = styled.div`
     /* flex-direction:row; */
     /* align-items: center; */
     /* justify-content: center; */
-    background:white;
+    /* background:white; */
     margin: 40px;
-    height:60%;
+    height:80%;
 `
+
+const ReviewContainer = styled.div`
+    flex:1;
+    /* display: flex; */
+    /* flex-direction:row; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* background:white; */
+    margin-right: 40px;
+    height:80%;
+`
+
 export default Detail

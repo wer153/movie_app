@@ -2,16 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 
-const Movie = ({id, year, title, summary, poster, genres}) => {
+const Movie = ({id, year, title, summary, poster, largePoster, genres, background}) => {
     const summaryLength = 100
     return  (
         <Link to= {{  pathname:`/movie/${id}`,
-                    state:{year,title,summary,poster,genres}
+                    state:{year,title,summary,largePoster,genres,background}
                 }}
         >
             <div className='movie'>
                 {/* {console.log(id, year, title, summary, poster, genres)} */}
                 <img src={poster} alt='{title}' title={title}/>
+                <img src={background} alt='{title}' title={title}/>
                 <div className='movie_data'>
                     <h4 className='movie_title'>{title}</h4>
                     <p className='movie_year'>year:{year}</p>

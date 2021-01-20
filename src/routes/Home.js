@@ -10,10 +10,12 @@ const Home = () => {
   const url = 'https://yts-proxy.now.sh/list_movies.json?sort_by=rating'
   const getMoviesData = async () => {
     const {data: { data:{movies}}} = await axios.get(url)
-    setMovieData(movies)
-    setIsLoading(false)
-    console.log(movies)
+
+    
+    await setMovieData(movies)
+    await setIsLoading(false)
   }
+
   useEffect(() => {
     getMoviesData()
   }, [isLoading])
@@ -26,17 +28,23 @@ const Home = () => {
         </div>
       ) : (
         <div>
-        {/* {console.log(movieData[0])} */}
-          {movieData.map(movie=>(
+          {/* {console.group(movieData)} */}
+          {movieData.map(movie=>{
+            if(2021<=movie.year){
+              return null
+            }
+            return(
             <Movie 
-              key={movie.id} 
+              key={movie.id}
               id={movie.id}
               title={movie.title}
               year={movie.year}
               summary={movie.summary}
               poster={movie.medium_cover_image}
+              largePoster={movie.large_cover_image}
+              background={movie.background_image}
               genres={movie.genres}
-            />))}
+            />)})}
         </div>
       )
     }
