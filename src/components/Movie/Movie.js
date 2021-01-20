@@ -1,31 +1,84 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import {Link} from 'react-router-dom'
 
 const Movie = ({id, year, title, summary, poster, largePoster, genres, background}) => {
     const summaryLength = 100
     return  (
-        <Link to= {{  pathname:`/movie/${id}`,
+        <LinkToDetail to= {{  pathname:`/movie/${id}`,
                     state:{year,title,summary,largePoster,genres,background}
                 }}
         >
-            <div className='movie'>
-                {/* {console.log(id, year, title, summary, poster, genres)} */}
-                <img src={poster} alt='{title}' title={title}/>
-                <img src={background} alt='{title}' title={title}/>
-                <div className='movie_data'>
-                    <h4 className='movie_title'>{title}</h4>
-                    <p className='movie_year'>year:{year}</p>
-                    <ul className='genres'>
-                        {genres.map((genre, index)=><li className='genres_genre' key={index}>{genre}</li>)}
-                    </ul>
-                    <p className='movie_summary'>{summary.slice(0,summaryLength)+"..."}</p>
-                    
-                </div>
-            </div> 
-        </Link>
+            <MovieContainer>
+                <ImageContainer src={poster} alt='{title}' title={title}/>
+                <Title>{title}</Title>
+                <Paragraph>year:{year}</Paragraph>
+                <Genres>
+                {genres.map((genre, index)=><Genre key={index}>{genre}</Genre>)}
+                </Genres>
+                <Paragraph>{summary.slice(0,summaryLength)+"..."}</Paragraph>
+            </MovieContainer>
+        </LinkToDetail>
         )
 }
+
+const LinkToDetail = styled(Link)`
+    display: grid;
+    /* grid-template-columns: minmax(150px, 1fr) 2fr; */
+    grid-gap: 20px;
+    text-decoration: none;
+    color: inherit;
+`
+
+const Paragraph = styled.p`
+    margin: 0;
+    font-weight: 300;
+    margin-right: 10px;
+    font-size: 14px;
+`
+
+const MovieContainer = styled.div`
+    background-color: white;
+    margin-bottom: 70px;
+    font-weight: 300;
+    padding: 20px;
+    border-radius: 5px;
+    color: #adaeb9;
+    box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+`
+
+const ImageContainer = styled.img`
+    position: relative;
+    top: -50px;
+    max-width: 150px;
+    width: 100%;
+    margin-right: 30px;
+    box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+`
+const Title = styled.h4`
+    margin: 0;
+    font-weight: 300;
+    margin-bottom: 5px;
+    font-size: 24px;
+    color: #2c2c2c;
+`
+
+const Genres = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px 0px;
+`
+
+const Genre = styled.li`
+    margin-right: 10px;
+    font-size: 14px;
+`
 
 Movie.propTypes = {
     id:PropTypes.number.isRequired,

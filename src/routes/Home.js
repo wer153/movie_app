@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from 'axios'
+import styled from 'styled-components'
 import Movie from '../components/Movie/Movie.js'
 import './Home.css'
 
@@ -25,9 +26,9 @@ const Home = () => {
       {isLoading ? (
         <div className='loader'>
           <span>'Loading'</span>
-        </div>
+        </div> //will apply spinner instead
       ) : (
-        <div>
+        <Movies>
           {/* {console.group(movieData)} */}
           {movieData.map(movie=>{
             if(2021<=movie.year){
@@ -45,11 +46,19 @@ const Home = () => {
               background={movie.background_image}
               genres={movie.genres}
             />)})}
-        </div>
+        </Movies>
       )
     }
     </section>
   );
 }
 
+const Movies = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-gap: 100px;
+  padding: 50px;
+  width: 80%;
+  padding-top: 70px;
+`
 export default Home;

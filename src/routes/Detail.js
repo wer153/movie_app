@@ -15,7 +15,7 @@ const Detail = props => {
     <BackgroundContainer>
         {console.log(movieData)}
         <BackgroundPoster url = {movieData.background}/>
-
+        <BackgroundPoster url = {movieData.background}/>
         <MainContainer>
             <Poster src = {movieData.largePoster}/>
             <ContentContainer>
