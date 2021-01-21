@@ -9,48 +9,63 @@ const Home = () => {
   const [page, setPage] = useState(0)
 
   const url = `https://yts-proxy.now.sh/list_movies.json?sort_by=rating&page=${page}`
-  const getMoviesData = async () => {
-    setPage(prev=>prev+1)
+  const fetchMoviesData = async () => {
+    setIsLoading(true)
+    setPage(page+1)
     const {data: { data:{movies}}} = await axios.get(url)
-
-    setMovieData(movies)
+    console.log( await axios.get(url))
+    setMovieData([...movies])
     setIsLoading(false)
   }
 
-  useEffect(() => {
-    getMoviesData()
-  }, [isLoading])
+  const handleScroll = () => {
+    const {scrollTop, clientHeight, scrollHeight} = document.documentElement
+    console.log(scrollTop, clientHeight, scrollHeight)
+    if(!isLoading && scrollTop + clientHeight >= scrollHeight){
+      console.log('fetch!')
+      fetchMoviesData()
+    }
+  }
+  useEffect(() => { 
+    
+    fetchMoviesData()
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      // scroll event listener 해제
+      console.log('해제')
+      window.removeEventListener("scroll", handleScroll);
+    }
+  }, [])
   
   return (
-    <HomeContainer>
-      {isLoading ? (
+    <div>
+      {isLoading ? 
         <div className='loader'>
           <span>'Loading'</span>
         </div> //will apply spinner instead
-      ) : (
-        <Movies>
-          {console.log(movieData[0])}
-          {movieData.map(movie=>{
-            if(2021<=movie.year){
-              return null
-            }
-            return(
-            <Movie 
-              key={movie.id}
-              id={movie.id}
-              title={movie.title}
-              year={movie.year}
-              summary={movie.summary}
-              poster={movie.medium_cover_image}
-              largePoster={movie.large_cover_image}
-              background={movie.background_image}
-              genres={movie.genres}
-              rating={movie.rating}
-            />)})}
-        </Movies>
-      )
-    }
-    </HomeContainer>
+       : 
+        <HomeContainer>
+          <Movies>
+            {console.log(movieData)}
+            {movieData.map(movie=>{
+              if(2021<=movie.year){return null}
+              return(
+              <Movie 
+                key={movie.id}
+                id={movie.id}
+                title={movie.title}
+                year={movie.year}
+                summary={movie.summary}
+                poster={movie.medium_cover_image}
+                largePoster={movie.large_cover_image}
+                background={movie.background_image}
+                genres={movie.genres}
+                rating={movie.rating}
+              />)})}
+          </Movies>
+        </HomeContainer>
+        }
+    </div>
   );
 }
 
